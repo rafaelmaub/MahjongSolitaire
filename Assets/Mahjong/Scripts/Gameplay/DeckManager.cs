@@ -29,8 +29,13 @@ public class DeckManager : MonoBehaviour
                 MahjongPiece pc = SpawnPiece(data);
                 GridTile tempTile = Manager.Grid.GetRandomTile(true);
 
+
+
                 pc.transform.position = tempTile.transform.position;
                 pc.LinkToTileSlot(tempTile);
+
+                pc.Interactions.OnPieceSelected += Manager.SelectedPiece;
+                pc.Interactions.OnPieceUnselected += Manager.UnselectedPiece;
             }
         }
 

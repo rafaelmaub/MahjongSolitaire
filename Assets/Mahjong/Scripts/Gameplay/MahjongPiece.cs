@@ -10,6 +10,8 @@ public class MahjongPiece : MonoBehaviour
     public SpriteRenderer Symbol => graphics;
     public SpriteRenderer TileGlow => tileGlow;
     public PieceInteractor Interactions => _interactor;
+    public TileData TileData => _tileData;
+
     [SerializeField] private SpriteRenderer tileGlow;
     [SerializeField] private SpriteRenderer graphics;
 

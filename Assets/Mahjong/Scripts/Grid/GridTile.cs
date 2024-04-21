@@ -29,7 +29,9 @@ public class GridTile : MonoBehaviour
     }
     public bool IsTilePlayable()
     {
-        return GridManager.GetNextTile(_coordinates) == null || GridManager.GetPreviousTile(_coordinates) == null;
+        bool leftAvailable = GridManager.GetPreviousTile(_coordinates) ? GridManager.GetPreviousTile(_coordinates).IsEmpty : true;
+        bool rightAvailable = GridManager.GetNextTile(_coordinates) ? GridManager.GetNextTile(_coordinates).IsEmpty : true;
+        return rightAvailable || leftAvailable;
     }
     public void LinkPiece(MahjongPiece piece)
     {
