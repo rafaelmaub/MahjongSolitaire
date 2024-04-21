@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55a41828a25d70749b8d22a6c26e09fc, type: 3}
   m_Name: SimpleLayout
   m_EditorClassIdentifier: 
-  layout:
-    columns: 
+  layoutMap:
+    rows:
+    - columns: 0000000000
+    - columns: 0000000000

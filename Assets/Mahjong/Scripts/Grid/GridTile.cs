@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class GridTile : MonoBehaviour
 {
+
+    GridManager _gridManager;
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,4 +19,10 @@ public class GridTile : MonoBehaviour
     {
         
     }
+
+    public void LinkToManager(GridManager manager)
+    {
+        _gridManager = manager;
+    }
+
 }
