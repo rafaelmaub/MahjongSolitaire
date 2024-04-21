@@ -51,4 +51,6 @@ public class GridManager : MonoBehaviour
             currentPos.y -= spacingY;
         }
     }
+
+
 }
