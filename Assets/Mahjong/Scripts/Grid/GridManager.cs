@@ -42,10 +42,15 @@ public class GridManager : MonoBehaviour
                 {
 
                     GridTile tempTile = Instantiate(tilePrefab, currentPos, Quaternion.identity);
+                    
                     _grid[x, y, z] = tempTile;
                     currentPos.x += spacingX;
+
                     tempTile.transform.SetParent(transform);
+                    tempTile.SetUpTile(new Vector3Int(x, y, z));
+
                     _tiles.Add(tempTile);
+
                 }
 
                 currentPos.x = startingPosition.x;
@@ -68,6 +73,29 @@ public class GridManager : MonoBehaviour
             _availaleTiles.Remove(tempTile);
             return tempTile;
             
+        }
+    }
+
+    public GridTile GetPreviousTile(Vector3Int coordinates)
+    {
+        if(coordinates.x <= 0)
+        {
+            return null;
+        }
+        else
+        {
+            return _grid[coordinates.x - 1, coordinates.y, coordinates.z];
+        }
+    }
+    public GridTile GetNextTile(Vector3Int coordinates)
+    {
+        if (coordinates.x >= gridSize.x - 1)
+        {
+            return null;
+        }
+        else
+        {
+            return _grid[coordinates.x + 1, coordinates.y, coordinates.z];
         }
     }
 }

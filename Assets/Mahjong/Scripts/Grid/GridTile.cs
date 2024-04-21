@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class GridTile : MonoBehaviour
 {
+    private GridManager GridManager => GameManager.Instance.Grid;
     public bool IsEmpty => _pieceLinked == null;
     public MahjongPiece PieceLinked => _pieceLinked;
 
     private MahjongPiece _pieceLinked;
-    private GridManager _gridManager;
-    
+
+    private Vector3Int _coordinates;
 
     // Start is called before the first frame update
     void Start()
@@ -22,15 +23,17 @@ public class GridTile : MonoBehaviour
     {
         
     }
-
+    public void SetUpTile(Vector3Int coordinates)
+    {
+        _coordinates = coordinates;
+    }
+    public bool IsTilePlayable()
+    {
+        return GridManager.GetNextTile(_coordinates) == null || GridManager.GetPreviousTile(_coordinates) == null;
+    }
     public void LinkPiece(MahjongPiece piece)
     {
         _pieceLinked = piece;
-    }
-
-    public void LinkToManager(GridManager manager)
-    {
-        _gridManager = manager;
     }
 
 }
