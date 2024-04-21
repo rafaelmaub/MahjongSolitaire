@@ -10,6 +10,11 @@ public class GridManager : MonoBehaviour
     [SerializeField] private GridTile tilePrefab;
 
     GridTile[,] _grid;
+
+    private void Awake()
+    {
+        transform.position = Vector2.zero;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +44,7 @@ public class GridManager : MonoBehaviour
                 GridTile tempTile = Instantiate(tilePrefab, currentPos, Quaternion.identity);
                 _grid[x, y] = tempTile;
                 currentPos.x += spacingX;
+                tempTile.transform.SetParent(transform);
             }
 
             currentPos.x = startingPosition.x;
