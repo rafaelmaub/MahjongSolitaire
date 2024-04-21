@@ -4,20 +4,38 @@ using UnityEngine;
 
 public class DeckManager : MonoBehaviour
 {
+    private GameManager Manager => GameManager.Instance;
+
     [SerializeField] private MahjongPiece piecePrefab;
     [SerializeField] private List<TileData> tilesDatabase = new List<TileData>(); //TODO: Store all tiles into another scriptable object and assign the object here instead
 
+    TileData GetRandomTileData()
+    {
+        return tilesDatabase[Random.Range(0, tilesDatabase.Count)];
+    }
 
     public void SpawnAndSpreadTiles(int amount)
     {
-
-        int amountPerCard = tilesDatabase.Count / amount; //TODO: avoid "odd" numbers
-
-        for(int i = 0; i < amount; i++)
+        if(amount % 2 != 0)
         {
-
+            amount--;
         }
+
+        int amountPerCard = amount / tilesDatabase.Count; //TODO: avoid "odd" numbers
+        foreach(TileData data in tilesDatabase)
+        {
+            for (int i = 0; i < amountPerCard; i++)
+            {
+                MahjongPiece pc = SpawnPiece(data);
+                GridTile tempTile = Manager.Grid.GetRandomTile(true);
+
+                pc.transform.position = tempTile.transform.position;
+                pc.LinkToTileSlot(tempTile);
+            }
+        }
+
     }
+
     MahjongPiece SpawnPiece(TileData tileData)
     {
         MahjongPiece tempPiece = Instantiate(piecePrefab, transform);

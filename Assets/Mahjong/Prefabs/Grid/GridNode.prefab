@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7775714878054105596}
   - component: {fileID: 7775714878054105587}
-  - component: {fileID: 7775714878054105586}
-  m_Layer: 0
+  - component: {fileID: 933244849108162966}
+  m_Layer: 2
   m_Name: GridNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 143b11eecb04b744783a1381db261a3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!61 &7775714878054105586
+--- !u!61 &933244849108162966
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

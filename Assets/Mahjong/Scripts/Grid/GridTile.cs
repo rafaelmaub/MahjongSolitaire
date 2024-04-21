@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class GridTile : MonoBehaviour
 {
+    public bool IsEmpty => _pieceLinked == null;
+    public MahjongPiece PieceLinked => _pieceLinked;
 
-    GridManager _gridManager;
+    private MahjongPiece _pieceLinked;
+    private GridManager _gridManager;
     
 
     // Start is called before the first frame update
@@ -18,6 +21,11 @@ public class GridTile : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void LinkPiece(MahjongPiece piece)
+    {
+        _pieceLinked = piece;
     }
 
     public void LinkToManager(GridManager manager)
