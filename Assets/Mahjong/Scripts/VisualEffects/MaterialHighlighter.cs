@@ -3,60 +3,114 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MaterialHighlighter : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class MaterialHighlighter : PieceAttachment
 {
     [SerializeField] private float maxGlow;
     [SerializeField] private float breatheFrequency;
+    [SerializeField] private float loopBreatheFrequency;
 
     private const string emission = "_EmissionColor";
     private Coroutine _currentAnimation;
-    private MahjongPiece _piece;
+
     private Material _material;
-    [SerializeField] private float _currentGlow;
+    private float _currentGlow;
+    private bool _lockAnimation;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        InitializeHighLight(Piece);
+    }
+
     public void InitializeHighLight(MahjongPiece pc)
     {
-        _piece = pc;
-        _material = _piece.Symbol.material;
+
         _currentGlow = 1;
+        Piece.Interactions.OnPieceSelected += StartBreatheLoop;
+        Piece.Interactions.OnPieceUnselected += StopBreatheLoop;
+        Piece.Interactions.OnPieceHoverEnter += StartHoverAnimation;
+        Piece.Interactions.OnPieceHoverExit += StopHoverAnimation;
     }
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Debug.Log(_piece.IsPlayable());
 
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
+    private void OnDestroy()
     {
-        if(_currentAnimation != null)
+        if(Piece)
         {
-            StopCoroutine(_currentAnimation);
+            Piece.Interactions.OnPieceSelected -= StartBreatheLoop;
+            Piece.Interactions.OnPieceUnselected -= StopBreatheLoop;
+            Piece.Interactions.OnPieceHoverEnter -= StartHoverAnimation;
+            Piece.Interactions.OnPieceHoverExit -= StopHoverAnimation;
         }
-        
-
-        _currentAnimation = StartCoroutine(BreatheIn());
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    void StartBreatheLoop(MahjongPiece pc)
     {
         if (_currentAnimation != null)
         {
             StopCoroutine(_currentAnimation);
         }
+        _lockAnimation = true;
+        _material = Piece.Symbol.material;
+        _currentAnimation = StartCoroutine(LoopBreathe(_material));
+    }
 
-        _currentAnimation = StartCoroutine(BreathOut());
+    void StopBreatheLoop(MahjongPiece pc)
+    {
+        _lockAnimation = false;
+        StopAllCoroutines();
+        StopHoverAnimation();
+    }
+
+    void StartHoverAnimation()
+    {
+        if (_lockAnimation) return;
+
+        if (_currentAnimation != null)
+        {
+            StopCoroutine(_currentAnimation);
+        }
+        _material = Piece.Symbol.material;
+
+        _currentAnimation = StartCoroutine(BreatheIn(_material, breatheFrequency));
+    }
+
+    void StopHoverAnimation()
+    {
+        if (_lockAnimation) return;
+
+        if (_currentAnimation != null)
+        {
+            StopCoroutine(_currentAnimation);
+        }
+        _material = Piece.Symbol.material;
+
+        _currentAnimation = StartCoroutine(BreathOut(_material, breatheFrequency));
     }
 
 
+    IEnumerator LoopBreathe(Material spriteMat)
+    {
+        while(true)
+        {
+            Coroutine breatheIn = StartCoroutine(BreatheIn(spriteMat, loopBreatheFrequency));
+            yield return breatheIn;
+            Coroutine breatheOut = StartCoroutine(BreathOut(spriteMat, loopBreatheFrequency));
+            yield return breatheOut;
+        }
+    }
 
-    IEnumerator BreatheIn()
+    IEnumerator BreatheIn(Material spriteMat, float freq)
     {
         Color emissionColor = Color.white;
-        WaitForSeconds delay = new WaitForSeconds(( 1 / breatheFrequency));
-        while(_currentGlow < maxGlow)
+        float time = (1 / freq);
+        WaitForSeconds delay = new WaitForSeconds(time);
+        float step = maxGlow / freq;
+
+        while (_currentGlow < maxGlow)
         {
 
-            _material.SetColor(emission, emissionColor * _currentGlow);
-            _currentGlow += breatheFrequency / maxGlow;
+            spriteMat.SetColor(emission, emissionColor * _currentGlow);
+            _currentGlow += step;
             _currentGlow = Mathf.Clamp(_currentGlow, 1, maxGlow);
             yield return delay;
         }
@@ -64,16 +118,18 @@ public class MaterialHighlighter : MonoBehaviour, IPointerEnterHandler, IPointer
         _currentGlow = maxGlow;
     }
 
-    IEnumerator BreathOut()
+    IEnumerator BreathOut(Material spriteMat, float freq)
     {
         Color emissionColor = Color.white;
-        WaitForSeconds delay = new WaitForSeconds((1 / breatheFrequency));
+        float time = (1 / freq);
+        WaitForSeconds delay = new WaitForSeconds(time);
+        float step = maxGlow / freq;
 
         while (_currentGlow > 1)
         {
 
-            _material.SetColor(emission, emissionColor * _currentGlow);
-            _currentGlow -= breatheFrequency / maxGlow;
+            spriteMat.SetColor(emission, emissionColor * _currentGlow);
+            _currentGlow -= step;
             _currentGlow = Mathf.Clamp( _currentGlow, 1, maxGlow);
             yield return delay;
         }
