@@ -10,6 +10,7 @@ public class PopUpData : ScriptableObject
     public PopUpType PopUpType => questionType;
 
     [SerializeField] private string title;
+    [TextArea]
     [SerializeField] private string description;
     [SerializeField] private PopUpType questionType;
 

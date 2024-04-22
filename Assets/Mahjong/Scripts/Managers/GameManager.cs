@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
     private List<MahjongPiece> _selectedPieces = new List<MahjongPiece>();
     [SerializeField] private List<AmountOfTile> _allPieces = new List<AmountOfTile>();
 
+    public Action<bool> OnGameOver;
     private void Start()
     {
         Grid.CreateGrid();
@@ -154,11 +156,13 @@ public class GameManager : MonoBehaviour
     }
     void GameWin()
     {
+        OnGameOver.Invoke(true);
         Debug.Log("WIN");
     }
 
     void GameLose()
     {
+        OnGameOver.Invoke(false);
         Debug.LogError("NO MORE MATCHES");
     }
 
@@ -175,7 +179,7 @@ public class GameManager : MonoBehaviour
 
     public void InvalidClick(MahjongPiece pc)
     {
-        Instantiate(invalidClickFeedback, (Vector2)pc.transform.position + (Random.insideUnitCircle / 8.5f), Quaternion.identity);
+        Instantiate(invalidClickFeedback, (Vector2)pc.transform.position + (UnityEngine.Random.insideUnitCircle / 8.5f), Quaternion.identity);
     }
     #endregion
 }

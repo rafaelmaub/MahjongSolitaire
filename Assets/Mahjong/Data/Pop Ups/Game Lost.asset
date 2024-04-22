@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Game Lost
   m_EditorClassIdentifier: 
   title: DEFEAT!
-  description: You couldn't find match every tile in the board. Do you wish to try
-    again?
+  description: 'You couldn''t find match every tile in the board.
+
+    Do you wish
+    to try again?'
   questionType: 0

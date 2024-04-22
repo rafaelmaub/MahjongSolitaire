@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Game Won
   m_EditorClassIdentifier: 
   title: VICTORY!
-  description: You matched all tiles. Do you wish to play again?
+  description: "You matched all tiles. \nDo you wish to play again?"
   questionType: 0
