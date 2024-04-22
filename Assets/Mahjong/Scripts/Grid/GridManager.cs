@@ -23,7 +23,15 @@ public class GridManager : MonoBehaviour
     {
         transform.position = Vector2.zero;
     }
+    public void ResetGrid()
+    {
+        foreach (GridTile t in _tiles)
+        {
+            t.ResetTile();
+        }
 
+        _availableTiles = _tiles.ToList();
+    }
     public void CreateGrid()
     {
         _grid = new GridTile[gridSize.x, gridSize.y, gridSize.z];
@@ -57,6 +65,7 @@ public class GridManager : MonoBehaviour
                 currentPos.y -= spacingY;
             }
         }
+
         _availableTiles = _tiles.ToList();
 
     }

@@ -54,7 +54,15 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void ResetGame()
+    {
+        deck.ResetDeck();
+        grid.ResetGrid();
+        _allPieces.Clear();
+        _selectedPieces.Clear();
 
+        StartGame();
+    }
 
     //TODO: IMPROVE ALGORITHM TO FIND INDEX ON BIGGER LISTS
     public void PieceSpawned(MahjongPiece piece)
@@ -118,27 +126,40 @@ public class GameManager : MonoBehaviour
         _selectedPieces.Clear();
         StartCoroutine(CheckForRemainingPieces());
     }
-    
+
+    #region GameSequenceCheck
+    void GameWin()
+    {
+        OnGameOver.Invoke(true);
+        Debug.Log("WIN");
+    }
+
+    void GameLose()
+    {
+        OnGameOver.Invoke(false);
+        Debug.LogError("NO MORE MATCHES");
+    }
     IEnumerator CheckForRemainingPieces()
     {
+        yield return new WaitForEndOfFrame();
         int amountOfCards = 0;
-        foreach(AmountOfTile ap in _allPieces)
+        foreach (AmountOfTile ap in _allPieces)
         {
             amountOfCards += ap.Count;
         }
 
-        if(amountOfCards > 0)
+        if (amountOfCards > 0)
         {
             bool isMatchAvailable = false;
             foreach (AmountOfTile ap in _allPieces)
             {
                 int availableCount = ap.AvailableCount;
-                if(availableCount >= 2)
+                if (availableCount >= 2)
                 {
                     isMatchAvailable = true;
                     break;
                 }
-                
+
             }
 
             if (!isMatchAvailable)
@@ -151,20 +172,11 @@ public class GameManager : MonoBehaviour
         {
             GameWin();
         }
-        
-        yield return null;
-    }
-    void GameWin()
-    {
-        OnGameOver.Invoke(true);
-        Debug.Log("WIN");
-    }
 
-    void GameLose()
-    {
-        OnGameOver.Invoke(false);
-        Debug.LogError("NO MORE MATCHES");
+        
     }
+    #endregion
+
 
     public void AddTileTypeToAllPieces(TileData data)
     {
@@ -174,6 +186,7 @@ public class GameManager : MonoBehaviour
     {
         return _allPieces.Where(p => p.IsThisList(data)).FirstOrDefault();
     }
+
 
     #region Feedbacks
 

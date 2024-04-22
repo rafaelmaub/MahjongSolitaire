@@ -61,4 +61,9 @@ public class DeckManager : MonoBehaviour
 
         return tempPiece;
     }
+
+    public void ResetDeck()
+    {
+
+    }
 }

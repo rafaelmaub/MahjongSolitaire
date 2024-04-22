@@ -12,16 +12,12 @@ public class GridTile : MonoBehaviour
 
     private Vector3Int _coordinates;
 
-    // Start is called before the first frame update
-    void Start()
+    public void ResetTile()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if(_pieceLinked)
+        {
+            Destroy(_pieceLinked);
+        }
     }
     public void SetUpTile(Vector3Int coordinates)
     {
