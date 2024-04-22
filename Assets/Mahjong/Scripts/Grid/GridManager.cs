@@ -16,7 +16,7 @@ public class GridManager : MonoBehaviour
 
     private GridTile[,,] _grid;
     private List<GridTile> _tiles = new List<GridTile>();
-    private List<GridTile> _availaleTiles;
+    private List<GridTile> _availableTiles;
 
     
     private void Awake()
@@ -57,7 +57,7 @@ public class GridManager : MonoBehaviour
                 currentPos.y -= spacingY;
             }
         }
-        _availaleTiles = _tiles.ToList();
+        _availableTiles = _tiles.ToList();
 
     }
 
@@ -69,8 +69,8 @@ public class GridManager : MonoBehaviour
         }
         else
         {
-            GridTile tempTile = _availaleTiles[Random.Range(0, _availaleTiles.Count)];
-            _availaleTiles.Remove(tempTile);
+            GridTile tempTile = _availableTiles[Random.Range(0, _availableTiles.Count)];
+            _availableTiles.Remove(tempTile);
             return tempTile;
             
         }

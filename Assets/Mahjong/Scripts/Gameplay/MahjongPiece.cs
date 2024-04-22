@@ -23,11 +23,6 @@ public class MahjongPiece : MonoBehaviour
     private void Awake()
     {
         _interactor = new PieceInteractor();
-        if(!graphics)
-        {
-            graphics = GetComponentInChildren<SpriteRenderer>();
-        }
-
     }
 
     public bool IsPlayable()
@@ -38,7 +33,7 @@ public class MahjongPiece : MonoBehaviour
     public void SetupPiece(TileData data)
     {
         _tileData = data;
-
+        
         if(graphics)
         {
             graphics.sprite = _tileData.SpriteVisual;
@@ -73,11 +68,12 @@ public class MahjongPiece : MonoBehaviour
         }
         else
         {
-
+            Interactions.Evt_OnInvalidClick(this);
             //Effects here
             //Visual Feedback
 
         }
+
     }
 }
 
@@ -85,26 +81,31 @@ public class PieceInteractor
 {
     public event Action<MahjongPiece> OnPieceSelected;
     public event Action<MahjongPiece> OnPieceUnselected;
+    public event Action<MahjongPiece> OnInvalidClick;
     public event Action OnPieceHoverEnter;
     public event Action OnPieceHoverExit;
 
     public void Evt_OnPieceSelected(MahjongPiece pc)
     {
-        OnPieceSelected.Invoke(pc);
+        OnPieceSelected?.Invoke(pc);
     }
 
     public void Evt_OnPieceUnselected(MahjongPiece pc)
     {
-        OnPieceUnselected.Invoke(pc);
+        OnPieceUnselected?.Invoke(pc);
     }
 
     public void Evt_OnPieceHoverEnter()
     {
-        OnPieceHoverEnter.Invoke();
+        OnPieceHoverEnter?.Invoke();
+    }   
+    public void Evt_OnInvalidClick(MahjongPiece pc)
+    {
+        OnInvalidClick?.Invoke(pc);
     }
     public void Evt_OnPieceHoverExit()
     {
-        OnPieceHoverExit.Invoke();
+        OnPieceHoverExit?.Invoke();
     }
 }
 

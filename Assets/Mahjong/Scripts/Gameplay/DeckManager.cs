@@ -6,8 +6,17 @@ public class DeckManager : MonoBehaviour
 {
     private GameManager Manager => GameManager.Instance;
 
+    [SerializeField] private int amountPerCard = 4;
     [SerializeField] private MahjongPiece piecePrefab;
     [SerializeField] private List<TileData> tilesDatabase = new List<TileData>(); //TODO: Store all tiles into another scriptable object and assign the object here instead
+
+    public void InitializeTileDatas()
+    {
+        foreach(TileData t in tilesDatabase)
+        {
+            Manager.AddTileTypeToAllPieces(t);
+        }
+    }
 
     TileData GetRandomTileData()
     {
@@ -21,7 +30,8 @@ public class DeckManager : MonoBehaviour
             amount--;
         }
 
-        int amountPerCard = amount / tilesDatabase.Count; //TODO: avoid "odd" numbers
+        //int amountPerCard = amount / tilesDatabase.Count;
+
         foreach(TileData data in tilesDatabase)
         {
             for (int i = 0; i < amountPerCard; i++)
@@ -29,13 +39,16 @@ public class DeckManager : MonoBehaviour
                 MahjongPiece pc = SpawnPiece(data);
                 GridTile tempTile = Manager.Grid.GetRandomTile(true);
 
-
+                tempTile.LinkPiece(pc);
+                pc.LinkToTileSlot(tempTile);
 
                 pc.transform.position = tempTile.transform.position;
-                pc.LinkToTileSlot(tempTile);
 
                 pc.Interactions.OnPieceSelected += Manager.SelectedPiece;
                 pc.Interactions.OnPieceUnselected += Manager.UnselectedPiece;
+                pc.Interactions.OnInvalidClick += Manager.InvalidClick;
+
+                Manager.PieceSpawned(pc);
             }
         }
 
