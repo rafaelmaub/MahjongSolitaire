@@ -27,15 +27,9 @@ public class DeckManager : MonoBehaviour
     {
         return tilesDatabase[Random.Range(0, tilesDatabase.Count)];
     }
-
-    public void SpawnAndSpreadTiles(int amount)
+    IEnumerator SpreadTiles()
     {
-        if(amount % 2 != 0)
-        {
-            amount--;
-        }
-
-        //int amountPerCard = amount / tilesDatabase.Count;
+        yield return new WaitForSeconds(0.2f);
         List<PieceAndTileLink> coroutineList = new List<PieceAndTileLink>();
         _allPiecesInstances = new List<MahjongPiece>();
 
@@ -62,6 +56,17 @@ public class DeckManager : MonoBehaviour
         }
 
         StartCoroutine(MovePiecesOnGrid(coroutineList));
+    }
+    public void SpawnAndSpreadTiles(int amount)
+    {
+        if(amount % 2 != 0)
+        {
+            amount--;
+        }
+
+        StartCoroutine(SpreadTiles());
+        //int amountPerCard = amount / tilesDatabase.Count;
+
     }
 
     IEnumerator MovePiecesOnGrid(List<PieceAndTileLink> list)

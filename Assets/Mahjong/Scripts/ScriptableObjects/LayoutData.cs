@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewLayoutData", menuName = "Custom/Layout Data")]
@@ -34,16 +35,20 @@ public class LayoutData : ScriptableObject
         }
     }
 
-    private bool[,] ConvertTo2DArray(bool[] array, int width, int height)
+    public static Tuple<bool[,], Vector2Int> ConvertTo2DArray(bool[] array, int width, int height)
     {
-        bool[,] result = new bool[height, width];
+        bool[,] result = new bool[width, height];
+        Vector2Int origin = new Vector2Int(0, 0);
+
+        // Iterate through the matrix
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
-                result[y, x] = array[y * width + x];
+                result[x, y] = array[(y * height) + x];
             }
         }
-        return result;
+
+        return new Tuple<bool[,], Vector2Int>(result, origin);
     }
 }

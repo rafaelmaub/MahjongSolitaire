@@ -5,8 +5,10 @@ using UnityEngine;
 public class GridTile : MonoBehaviour
 {
     public bool available;
-    private GridManager GridManager => GameManager.Instance.Grid;
     public bool IsEmpty => _pieceLinked == null;
+    public Vector3Int Coordinates => _coordinates;
+    private GridManager GridManager => GameManager.Instance.Grid;
+
     public MahjongPiece PieceLinked => _pieceLinked;
 
     private MahjongPiece _pieceLinked;

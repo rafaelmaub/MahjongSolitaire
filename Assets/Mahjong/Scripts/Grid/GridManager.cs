@@ -2,6 +2,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GridManager : MonoBehaviour
 {
@@ -13,11 +14,13 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Vector2 startingPosition;
     [SerializeField] private Vector3Int gridSize;
     [SerializeField] private GridTile tilePrefab;
+    [SerializeField] private List<LayoutData> _layouts = new List<LayoutData>();
 
     private GridTile[,,] _grid;
     private List<GridTile> _tiles = new List<GridTile>();
-    private List<GridTile> _availableTiles;
+    private List<GridTile> _availableTiles = new List<GridTile>();
 
+    
     
     private void Awake()
     {
@@ -30,8 +33,9 @@ public class GridManager : MonoBehaviour
             t.ResetTile();
         }
 
-        _availableTiles = _tiles.ToList();
+        ValidateTiles();
     }
+
     public void CreateGrid()
     {
         _grid = new GridTile[gridSize.x, gridSize.y, gridSize.z];
@@ -44,6 +48,8 @@ public class GridManager : MonoBehaviour
 
         for(int z = 0; z < gridSize.z; z++)
         {
+
+
             for (int y = 0; y < gridSize.y; y++)
             {
                 for (int x = 0; x < gridSize.x; x++)
@@ -59,6 +65,8 @@ public class GridManager : MonoBehaviour
 
                     _tiles.Add(tempTile);
 
+                    //TEST
+
                 }
 
                 currentPos.x = startingPosition.x;
@@ -66,7 +74,8 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        _availableTiles = _tiles.ToList();
+        ValidateTiles();
+
 
     }
 
@@ -74,11 +83,11 @@ public class GridManager : MonoBehaviour
     {
         if(!empty)
         {
-            return _tiles[Random.Range(0, _tiles.Count)];
+            return _tiles[UnityEngine.Random.Range(0, _tiles.Count)];
         }
         else
         {
-            GridTile tempTile = _availableTiles[Random.Range(0, _availableTiles.Count)];
+            GridTile tempTile = _availableTiles[UnityEngine.Random.Range(0, _availableTiles.Count)];
             _availableTiles.Remove(tempTile);
             return tempTile;
             
@@ -106,5 +115,38 @@ public class GridManager : MonoBehaviour
         {
             return _grid[coordinates.x + 1, coordinates.y, coordinates.z];
         }
+    }
+
+    void ValidateTiles()
+    {
+        _availableTiles = new List<GridTile>();
+        for (int z = 0; z < gridSize.z; z++)
+        {
+            Tuple<bool[,], Vector2Int> matrixTuple = LayoutData.ConvertTo2DArray(_layouts[z].Matrix, _layouts[z].LayoutSize.x, _layouts[z].LayoutSize.y);
+            bool[,] matrix = matrixTuple.Item1;
+            Vector2Int origin = matrixTuple.Item2;
+
+
+            for (int y = 0; y < gridSize.y; y++)
+            {
+                for (int x = 0; x < gridSize.x; x++)
+                {
+                    if (_availableTiles.Count == 0)
+                    { 
+                        _availableTiles.Add(_grid[x, y, z]);
+                    }
+                    else if (matrix[x, y])
+                    {
+                        int trueX = x;
+                        int trueY = y;
+                        _availableTiles.Add(_grid[trueX, trueY, z]);
+                    }
+
+                }
+
+
+            }
+        }
+
     }
 }
