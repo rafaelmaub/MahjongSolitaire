@@ -1037,15 +1037,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4639443415412926347, guid: 72608b2b86dff8a4e93f89baaff63703, type: 3}
       propertyPath: m_text
-      value: CONFIRM
+      value: PLAY AGAIN
       objectReference: {fileID: 0}
     - target: {fileID: 4639443415412926347, guid: 72608b2b86dff8a4e93f89baaff63703, type: 3}
       propertyPath: m_fontSize
-      value: 43.73
+      value: 41.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4639443415412926347, guid: 72608b2b86dff8a4e93f89baaff63703, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 41.1
       objectReference: {fileID: 0}
     - target: {fileID: 4639443415412926347, guid: 72608b2b86dff8a4e93f89baaff63703, type: 3}
       propertyPath: m_fontSizeBase
-      value: 43.73
+      value: 41.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 4639443415412926347, guid: 72608b2b86dff8a4e93f89baaff63703, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6212123623715809178, guid: 72608b2b86dff8a4e93f89baaff63703, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size

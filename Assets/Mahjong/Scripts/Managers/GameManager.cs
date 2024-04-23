@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     [Header("Feedbacks")]
     [SerializeField] private GameObject invalidClickFeedback;
     [SerializeField] private GameObject matchEffectFeedback;
+    [SerializeField] private AudioClip matchSound;
 
     private List<MahjongPiece> _selectedPieces = new List<MahjongPiece>();
     [SerializeField] private List<AmountOfTile> _allPieces = new List<AmountOfTile>();
@@ -117,12 +118,19 @@ public class GameManager : MonoBehaviour
 
     void SuccessMatch()
     {
+
+
         AmountOfTile tileList = GetAllTilesFromData(_selectedPieces[0].TileData);
         foreach (MahjongPiece p in _selectedPieces)
         {
             MatchEffect(p);
             tileList.RemovePieceFromList(p);
             Destroy(p.gameObject);
+        }
+
+        if (SoundManager.Instance && matchSound)
+        {
+            SoundManager.Instance.PlayCustomOneShot(matchSound);
         }
 
         _selectedPieces.Clear();

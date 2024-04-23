@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: "\u8D62"
   description: "You matched all tiles. \nDo you wish to play again?"
-  questionType: 0
+  questionType: 1

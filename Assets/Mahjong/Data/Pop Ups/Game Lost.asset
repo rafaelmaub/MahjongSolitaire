@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Game Lost
   m_EditorClassIdentifier: 
   title: "\u8D25 "
-  description: 'You couldn''t find match every tile in the board.
+  description: 'You couldn''t match every tile in the board.
 
-    Do you wish
-    to try again?'
-  questionType: 0
+    Do you wish to
+    try again?'
+  questionType: 1

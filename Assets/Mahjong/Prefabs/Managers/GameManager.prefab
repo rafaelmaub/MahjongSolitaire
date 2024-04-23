@@ -49,4 +49,5 @@ MonoBehaviour:
   requiredAmountToMatch: 2
   invalidClickFeedback: {fileID: 2378142702038817984, guid: 364e17d28cfc1e54ba7759d9c882c35d, type: 3}
   matchEffectFeedback: {fileID: 7153470525018959678, guid: ba2a90657a1a2b34fa04b2900bda097d, type: 3}
+  matchSound: {fileID: 8300000, guid: df00f1a15c2d61b4191970d88cfcdf58, type: 3}
   _allPieces: []

@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3257396260701682732}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,9 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c9f0e9dd1b543e4884fc027da7cce41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  amountPerCard: 4
   piecePrefab: {fileID: 2354606438937275615, guid: 120545185af1b774f86c07c98631f15d, type: 3}
   tilesDatabase:
   - {fileID: 11400000, guid: 3bfa95d9eb5ca0d429e8363fe745ce6d, type: 2}
   - {fileID: 11400000, guid: 9948af3ff2d09e34785058bf88008d4e, type: 2}
   - {fileID: 11400000, guid: 97eb978725eb8be48be93dc2c3f71245, type: 2}
   - {fileID: 11400000, guid: 6cd94fa4f2d26174584927c71fd43cec, type: 2}
+  tilesShuffleSpeed: 30
+  shuffleSound: {fileID: 8300000, guid: 572de9aa9e4691d4787ef7b09f8678e2, type: 3}

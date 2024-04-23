@@ -29,8 +29,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UIPopUpCaller defeatPopUpCaller;
     private void Start()
     {
-        defeatPopUpCaller.OnYes.AddListener(GameManager.Instance.ResetGame);
-        winPopUpCaller.OnYes.AddListener(GameManager.Instance.ResetGame);
+        defeatPopUpCaller.OnConfirm.AddListener(GameManager.Instance.ResetGame);
+        winPopUpCaller.OnConfirm.AddListener(GameManager.Instance.ResetGame);
 
         GameManager.Instance.OnGameOver += (win) => 
         {
