@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Feedbacks")]
     [SerializeField] private GameObject invalidClickFeedback;
+    [SerializeField] private GameObject matchEffectFeedback;
 
     private List<MahjongPiece> _selectedPieces = new List<MahjongPiece>();
     [SerializeField] private List<AmountOfTile> _allPieces = new List<AmountOfTile>();
@@ -119,6 +120,7 @@ public class GameManager : MonoBehaviour
         AmountOfTile tileList = GetAllTilesFromData(_selectedPieces[0].TileData);
         foreach (MahjongPiece p in _selectedPieces)
         {
+            MatchEffect(p);
             tileList.RemovePieceFromList(p);
             Destroy(p.gameObject);
         }
@@ -177,7 +179,6 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-
     public void AddTileTypeToAllPieces(TileData data)
     {
         _allPieces.Add(new AmountOfTile(data));
@@ -189,7 +190,10 @@ public class GameManager : MonoBehaviour
 
 
     #region Feedbacks
-
+    public void MatchEffect(MahjongPiece pc)
+    {
+        Instantiate(matchEffectFeedback, (Vector2)pc.transform.position, Quaternion.identity);
+    }
     public void InvalidClick(MahjongPiece pc)
     {
         Instantiate(invalidClickFeedback, (Vector2)pc.transform.position + (UnityEngine.Random.insideUnitCircle / 8.5f), Quaternion.identity);

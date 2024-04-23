@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GridTile : MonoBehaviour
 {
+    public bool available;
     private GridManager GridManager => GameManager.Instance.Grid;
     public bool IsEmpty => _pieceLinked == null;
     public MahjongPiece PieceLinked => _pieceLinked;
@@ -11,6 +12,11 @@ public class GridTile : MonoBehaviour
     private MahjongPiece _pieceLinked;
 
     private Vector3Int _coordinates;
+
+    private void Update()
+    {
+        available = IsTilePlayable();
+    }
 
     public void ResetTile()
     {

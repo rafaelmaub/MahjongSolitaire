@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98f4b25a3f4b403408c3d424ec60554b, type: 3}
   m_Name: Game Lost
   m_EditorClassIdentifier: 
-  title: DEFEAT!
+  title: "\u8D25 "
   description: 'You couldn''t find match every tile in the board.
 
     Do you wish

@@ -48,3 +48,5 @@ MonoBehaviour:
   deck: {fileID: 3257396260701682734, guid: d43a325507bd6ea478dc9f5f07b03165, type: 3}
   requiredAmountToMatch: 2
   invalidClickFeedback: {fileID: 2378142702038817984, guid: 364e17d28cfc1e54ba7759d9c882c35d, type: 3}
+  matchEffectFeedback: {fileID: 7153470525018959678, guid: ba2a90657a1a2b34fa04b2900bda097d, type: 3}
+  _allPieces: []

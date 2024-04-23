@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98f4b25a3f4b403408c3d424ec60554b, type: 3}
   m_Name: Game Won
   m_EditorClassIdentifier: 
-  title: VICTORY!
+  title: "\u8D62"
   description: "You matched all tiles. \nDo you wish to play again?"
   questionType: 0
