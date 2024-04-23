@@ -33,16 +33,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GridManager grid;
     [SerializeField] private DeckManager deck;
     [SerializeField] private int requiredAmountToMatch = 2;
-
+    
     [Header("Feedbacks")]
     [SerializeField] private GameObject invalidClickFeedback;
     [SerializeField] private GameObject matchEffectFeedback;
-    [SerializeField] private AudioClip matchSound;
 
     private List<MahjongPiece> _selectedPieces = new List<MahjongPiece>();
-    [SerializeField] private List<AmountOfTile> _allPieces = new List<AmountOfTile>();
+    private List<AmountOfTile> _allPieces = new List<AmountOfTile>();
 
     public Action<bool> OnGameOver;
+    public Action OnMatchMade;
+
     private void Start()
     {
         Grid.CreateGrid();
@@ -79,7 +80,6 @@ public class GameManager : MonoBehaviour
             MatchAttempt();
         }
     }
-
     public void UnselectedPiece(MahjongPiece piece)
     {
         _selectedPieces.Remove(piece);
@@ -112,14 +112,10 @@ public class GameManager : MonoBehaviour
         {
             p.UnselectTile();
         }
-
-        
     }
 
     void SuccessMatch()
     {
-
-
         AmountOfTile tileList = GetAllTilesFromData(_selectedPieces[0].TileData);
         foreach (MahjongPiece p in _selectedPieces)
         {
@@ -127,12 +123,7 @@ public class GameManager : MonoBehaviour
             tileList.RemovePieceFromList(p);
             Destroy(p.gameObject);
         }
-
-        if (SoundManager.Instance && matchSound)
-        {
-            SoundManager.Instance.PlayCustomOneShot(matchSound);
-        }
-
+        OnMatchMade.Invoke();
         _selectedPieces.Clear();
         StartCoroutine(CheckForRemainingPieces());
     }
@@ -141,13 +132,11 @@ public class GameManager : MonoBehaviour
     void GameWin()
     {
         OnGameOver.Invoke(true);
-        Debug.Log("WIN");
     }
 
     void GameLose()
     {
         OnGameOver.Invoke(false);
-        Debug.LogError("NO MORE MATCHES");
     }
     IEnumerator CheckForRemainingPieces()
     {

@@ -26,7 +26,31 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource mainFx;
     [SerializeField] private AudioSource mainMusic;
 
+    [Header("Global Sound Effects")]
+    [SerializeField] private AudioClip matchMade;
+    [SerializeField] private AudioClip victory;
+    [SerializeField] private AudioClip fail;
+    private void Start()
+    {
+        GameManager.Instance.OnGameOver += EndGameSound;
+        GameManager.Instance.OnMatchMade += MatchSoundEffect;
+    }
+    void EndGameSound(bool win)
+    {
+        if(win)
+        {
+            PlayCustomOneShot(victory);
+        }
+        else
+        {
+            PlayCustomOneShot(fail);
+        }
+    }
 
+    void MatchSoundEffect()
+    {
+        PlayCustomOneShot(matchMade);
+    }
     public void StartMusic()
     {
         mainMusic.mute = true;
@@ -38,6 +62,8 @@ public class SoundManager : MonoBehaviour
 
     public void PlayCustomOneShot(AudioClip clip)
     {
+        if (!clip) return;
+
         mainFx.PlayOneShot(clip);
     }
 }

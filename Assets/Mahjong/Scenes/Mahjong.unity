@@ -618,6 +618,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainFx: {fileID: 1687379176}
   mainMusic: {fileID: 951161981}
+  matchMade: {fileID: 8300000, guid: df00f1a15c2d61b4191970d88cfcdf58, type: 3}
+  victory: {fileID: 8300000, guid: f96120192e22c174ebda70c37869e04f, type: 3}
+  fail: {fileID: 8300000, guid: 4d23b7ec1a00002459ad6e32091dda25, type: 3}
 --- !u!1 &1208136387
 GameObject:
   m_ObjectHideFlags: 0
