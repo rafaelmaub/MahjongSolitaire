@@ -48,5 +48,4 @@ MonoBehaviour:
   gridSize: {x: 6, y: 6, z: 1}
   tilePrefab: {fileID: 7775714878054105587, guid: 8e94334385cc9244fb58f0fc598de0d9, type: 3}
   _layouts:
-  - {fileID: 11400000, guid: 736aa3a9ece13944bb6b94dc02a7a65c, type: 2}
   - {fileID: 11400000, guid: 5bd9d6b43861d5a4d9eacddc864f9a41, type: 2}

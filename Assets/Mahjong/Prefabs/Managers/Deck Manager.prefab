@@ -44,9 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c9f0e9dd1b543e4884fc027da7cce41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amountPerCard: 10
+  layersOffset: 0.12
+  amountPerCard: 4
   piecePrefab: {fileID: 2354606438937275615, guid: 120545185af1b774f86c07c98631f15d, type: 3}
-  layerGroupPrefab: {fileID: 2350858826650179891, guid: 104fadf68200a7747a206b24e23211e7, type: 3}
+  layerGroupPrefab: {fileID: 2350858826650179889, guid: 104fadf68200a7747a206b24e23211e7, type: 3}
   tilesDatabase:
   - {fileID: 11400000, guid: 3bfa95d9eb5ca0d429e8363fe745ce6d, type: 2}
   - {fileID: 11400000, guid: 9948af3ff2d09e34785058bf88008d4e, type: 2}

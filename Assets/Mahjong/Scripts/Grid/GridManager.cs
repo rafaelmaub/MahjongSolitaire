@@ -20,8 +20,6 @@ public class GridManager : MonoBehaviour
     private GridTile[,,] _grid;
     private List<GridTile> _tiles = new List<GridTile>();
     private List<GridTile> _availableTiles = new List<GridTile>();
-
-    
     
     private void Awake()
     {
@@ -65,8 +63,6 @@ public class GridManager : MonoBehaviour
                     tempTile.SetUpTile(new Vector3Int(x, y, z));
 
                     _tiles.Add(tempTile);
-
-                    //TEST
 
                 }
 
@@ -131,34 +127,50 @@ public class GridManager : MonoBehaviour
     void ValidateTiles()
     {
         _availableTiles = new List<GridTile>();
-        for (int z = 0; z < _layouts.Count; z++)
+
+        if(_layouts.Count == 0)
         {
-            Tuple<bool[,], Vector2Int> matrixTuple = LayoutData.ConvertTo2DArray(_layouts[z].Matrix, _layouts[z].LayoutSize.x, _layouts[z].LayoutSize.y);
-            bool[,] matrix = matrixTuple.Item1;
-            Vector2Int origin = matrixTuple.Item2;
-
-
-            for (int y = 0; y < gridSize.y; y++)
+            Debug.LogWarning("There are no grid slots in the game!");
+            _availableTiles = _tiles.ToList();
+        }
+        else
+        {
+            for (int z = 0; z < _layouts.Count; z++)
             {
-                for (int x = 0; x < gridSize.x; x++)
+                bool[,] matrix = LayoutData.ConvertTo2DArray(_layouts[z].Matrix, _layouts[z].LayoutSize.x, _layouts[z].LayoutSize.y);
+                //bool[,] matrix = matrixTuple.Item1;
+                //Vector2Int origin = matrixTuple.Item2;
+
+
+                for (int y = 0; y < gridSize.y; y++)
                 {
-                    if (_layouts.Count == 0)
+                    for (int x = 0; x < gridSize.x; x++)
                     {
-                        Debug.Log(x.ToString() + y.ToString() + z.ToString());
-                        _availableTiles.Add(_grid[x, y, z]);
+                        if (matrix[x, y])
+                        {
+                            _availableTiles.Add(_grid[x, y, z]);
+                        }
+
                     }
-                    else if (matrix[x, y])
-                    {
-                        int trueX = x;
-                        int trueY = y;
-                        _availableTiles.Add(_grid[trueX, trueY, z]);
-                    }
+
 
                 }
-
-
             }
         }
 
+
     }
+
+    #region Buttons
+    public void AddLayer(LayoutData layer)
+    {
+        _layouts.Insert(0, layer);
+    }
+
+    public void RemoveLayer()
+    {
+        _layouts.RemoveAt(0);
+    }
+
+    #endregion
 }

@@ -35,10 +35,10 @@ public class LayoutData : ScriptableObject
         }
     }
 
-    public static Tuple<bool[,], Vector2Int> ConvertTo2DArray(bool[] array, int width, int height)
+    public static bool[,] ConvertTo2DArray(bool[] array, int width, int height)
     {
         bool[,] result = new bool[width, height];
-        Vector2Int origin = new Vector2Int(0, 0);
+        //Vector2Int origin = new Vector2Int(0, 0);
 
         // Iterate through the matrix
         for (int y = 0; y < height; y++)
@@ -49,6 +49,6 @@ public class LayoutData : ScriptableObject
             }
         }
 
-        return new Tuple<bool[,], Vector2Int>(result, origin);
+        return result;
     }
 }

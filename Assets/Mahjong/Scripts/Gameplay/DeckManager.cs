@@ -8,13 +8,13 @@ public class DeckManager : MonoBehaviour
 {
     private GameManager Manager => GameManager.Instance;
 
-
+    [SerializeField] private float layersOffset = 0.12f;
     [SerializeField] private int amountPerCard = 4;
     [SerializeField] private MahjongPiece piecePrefab;
-    [SerializeField] private SortingGroup layerGroupPrefab;
+    [SerializeField] private GameObject layerGroupPrefab;
     [SerializeField] private List<TileData> tilesDatabase = new List<TileData>(); //TODO: Store all tiles into another scriptable object and assign the object here instead
 
-    private List<SortingGroup> _layersGroup;
+    private List<GameObject> _layersGroup;
     private List<MahjongPiece> _allPiecesInstances;
 
     [Header("Visuals")]
@@ -28,10 +28,6 @@ public class DeckManager : MonoBehaviour
         }
     }
 
-    TileData GetRandomTileData()
-    {
-        return tilesDatabase[Random.Range(0, tilesDatabase.Count)];
-    }
     IEnumerator SpreadTiles(int amount = 0)
     {
         yield return new WaitForSeconds(0.2f);
@@ -39,13 +35,12 @@ public class DeckManager : MonoBehaviour
         List<PieceAndTileLink> coroutineList = new List<PieceAndTileLink>();
 
         _allPiecesInstances = new List<MahjongPiece>();
-        _layersGroup = new List<SortingGroup>();
+        _layersGroup = new List<GameObject>();
 
         for(int i = 0; i < Manager.Grid.Depth; i++)
         {
-            SortingGroup tempSort = Instantiate(layerGroupPrefab);
-            tempSort.enabled = false;
-            tempSort.transform.position = new Vector3(i * -0.12f, i * 0.12f, -i); //hard code for faster results
+            GameObject tempSort = Instantiate(layerGroupPrefab);
+            tempSort.transform.position = new Vector3(i * -layersOffset, i * layersOffset, -i); //hard code for faster results
             _layersGroup.Add(tempSort);
         }
 
@@ -77,13 +72,23 @@ public class DeckManager : MonoBehaviour
     }
     public void SpawnAndSpreadTiles(int amount)
     {
-        if(amount % 2 != 0)
+        /*
+         * TODO: This could be used to always put a tile in every available grid slot
+        int amountPerCard = amount / tilesDatabase.Count;
+        if (amountPerCard % 2 != 0)
         {
-            amount--;
+            amountPerCard--;
+        } 
+        */
+
+        if(amountPerCard * tilesDatabase.Count > Manager.Grid.TilesInGame)
+        {
+            Debug.LogError("TOO MANY TILES TO SPAWN! Decrease the 'amountPerCard' value");
+            return;
         }
 
-        StartCoroutine(SpreadTiles(amount));
-        //int amountPerCard = amount / tilesDatabase.Count;
+        StartCoroutine(SpreadTiles(amountPerCard));
+        
 
     }
 
@@ -111,7 +116,7 @@ public class DeckManager : MonoBehaviour
     }
     MahjongPiece SpawnPiece(TileData tileData)
     {
-        MahjongPiece tempPiece = Instantiate(piecePrefab);
+        MahjongPiece tempPiece = Instantiate(piecePrefab, transform.position, Quaternion.identity);
         tempPiece.SetupPiece(tileData);
 
         return tempPiece;
@@ -124,13 +129,15 @@ public class DeckManager : MonoBehaviour
             if (p) Destroy(p.gameObject);
         }    
         
-        foreach(SortingGroup s in _layersGroup)
+        foreach(GameObject s in _layersGroup)
         {
-            if (s) Destroy(s.gameObject);
+            if (s) Destroy(s);
         }
+    }
 
-
-
+    public void SetAmountOfTiles(int amount)
+    {
+        amountPerCard = amount;
     }
 }
 

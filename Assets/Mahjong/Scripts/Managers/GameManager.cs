@@ -46,10 +46,13 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        
+    }
+    public void Btn_StartGame()
+    {
         Grid.CreateGrid();
         StartGame();
     }
-
     void StartGame()
     {
         Deck.InitializeTileDatas();
@@ -194,6 +197,23 @@ public class GameManager : MonoBehaviour
     public void InvalidClick(MahjongPiece pc)
     {
         Instantiate(invalidClickFeedback, (Vector2)pc.transform.position + (UnityEngine.Random.insideUnitCircle / 8.5f), Quaternion.identity);
+    }
+    #endregion
+
+
+    #region Buttons
+    public void SetAmountOfTiles(int amount)
+    {
+        Deck.SetAmountOfTiles(amount);
+    }
+    public void AddLayer(LayoutData layer)
+    {
+        Grid.AddLayer(layer);
+    }
+
+    public void RemoveLayer()
+    {
+        Grid.RemoveLayer();
     }
     #endregion
 }
