@@ -45,5 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingPosition: {x: -1.5, y: 1.5}
-  gridSize: {x: 6, y: 6, z: 1}
+  gridSize: {x: 4, y: 4, z: 1}
   tilePrefab: {fileID: 7775714878054105587, guid: 8e94334385cc9244fb58f0fc598de0d9, type: 3}
