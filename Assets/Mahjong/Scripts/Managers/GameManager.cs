@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
     void StartGame()
     {
         Deck.InitializeTileDatas();
-        Deck.SpawnAndSpreadTiles(grid.Rows * grid.Columns);
+        Deck.SpawnAndSpreadTiles(grid.TilesInGame);
 
     }
 

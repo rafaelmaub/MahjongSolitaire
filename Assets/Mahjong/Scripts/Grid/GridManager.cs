@@ -9,7 +9,8 @@ public class GridManager : MonoBehaviour
     private GameManager Manager => GameManager.Instance;
     public int Rows => gridSize.y;
     public int Columns => gridSize.x;
-    public int Depth => gridSize.z;
+    public int Depth => _layouts.Count;
+    public int TilesInGame => _availableTiles.Count;
 
     [SerializeField] private Vector2 startingPosition;
     [SerializeField] private Vector3Int gridSize;
@@ -38,17 +39,17 @@ public class GridManager : MonoBehaviour
 
     public void CreateGrid()
     {
-        _grid = new GridTile[gridSize.x, gridSize.y, gridSize.z];
+        _grid = new GridTile[gridSize.x, gridSize.y, _layouts.Count];
 
-        Vector2 currentPos = startingPosition;
+        
 
-        float spacingX = tilePrefab.transform.localScale.x;
-        float spacingY = tilePrefab.transform.localScale.y;
         //float spacingZ = tilePrefab.transform.localScale.y;
 
-        for(int z = 0; z < gridSize.z; z++)
+        for(int z = 0; z < _layouts.Count; z++)
         {
-
+            Vector2 currentPos = startingPosition;
+            float spacingX = tilePrefab.transform.localScale.x;
+            float spacingY = tilePrefab.transform.localScale.y;
 
             for (int y = 0; y < gridSize.y; y++)
             {
@@ -93,7 +94,17 @@ public class GridManager : MonoBehaviour
             
         }
     }
-
+    public GridTile GetAboveTile(Vector3Int coordinates)
+    {
+        if (coordinates.z >= _layouts.Count - 1 || _layouts.Count == 1)
+        {
+            return null;
+        }
+        else
+        {
+            return _grid[coordinates.x, coordinates.y, coordinates.z + 1];
+        }
+    }
     public GridTile GetPreviousTile(Vector3Int coordinates)
     {
         if(coordinates.x <= 0)
@@ -120,7 +131,7 @@ public class GridManager : MonoBehaviour
     void ValidateTiles()
     {
         _availableTiles = new List<GridTile>();
-        for (int z = 0; z < gridSize.z; z++)
+        for (int z = 0; z < _layouts.Count; z++)
         {
             Tuple<bool[,], Vector2Int> matrixTuple = LayoutData.ConvertTo2DArray(_layouts[z].Matrix, _layouts[z].LayoutSize.x, _layouts[z].LayoutSize.y);
             bool[,] matrix = matrixTuple.Item1;
@@ -131,8 +142,9 @@ public class GridManager : MonoBehaviour
             {
                 for (int x = 0; x < gridSize.x; x++)
                 {
-                    if (_availableTiles.Count == 0)
-                    { 
+                    if (_layouts.Count == 0)
+                    {
+                        Debug.Log(x.ToString() + y.ToString() + z.ToString());
                         _availableTiles.Add(_grid[x, y, z]);
                     }
                     else if (matrix[x, y])

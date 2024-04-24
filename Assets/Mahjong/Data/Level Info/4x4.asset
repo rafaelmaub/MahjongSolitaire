@@ -10,9 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55a41828a25d70749b8d22a6c26e09fc, type: 3}
-  m_Name: SimpleLayout
+  m_Name: 4x4
   m_EditorClassIdentifier: 
-  layoutMap:
-    rows:
-    - columns: 0000000000
-    - columns: 0000000000
+  layoutSize: {x: 6, y: 6}
+  matrix: 000101010100000101010100000101010100000101010100000000000000000000000000

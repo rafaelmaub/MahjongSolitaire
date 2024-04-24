@@ -34,8 +34,9 @@ public class GridTile : MonoBehaviour
     public bool IsTilePlayable()
     {
         bool leftAvailable = GridManager.GetPreviousTile(_coordinates) ? GridManager.GetPreviousTile(_coordinates).IsEmpty : true;
+        bool upAvailable = GridManager.GetAboveTile(_coordinates) ? GridManager.GetAboveTile(_coordinates).IsEmpty : true;
         bool rightAvailable = GridManager.GetNextTile(_coordinates) ? GridManager.GetNextTile(_coordinates).IsEmpty : true;
-        return rightAvailable || leftAvailable;
+        return (rightAvailable || leftAvailable) && upAvailable;
     }
     public void LinkPiece(MahjongPiece piece)
     {

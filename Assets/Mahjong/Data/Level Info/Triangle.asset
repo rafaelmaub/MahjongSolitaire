@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55a41828a25d70749b8d22a6c26e09fc, type: 3}
-  m_Name: MatrixTest
+  m_Name: Triangle
   m_EditorClassIdentifier: 
   layoutSize: {x: 6, y: 6}
-  matrix: 000101010100000101010100000101010100000101010100000000000000000000000000
+  matrix: 010101010101010101010101010101010101000101010100000001010000000000000000
